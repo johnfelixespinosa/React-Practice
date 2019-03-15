@@ -1,12 +1,40 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
+import PropTypes from 'prop-types';
 import './index.css';
-import App from './App';
-import * as serviceWorker from './serviceWorker';
 
-ReactDOM.render(<App />, document.getElementById('root'));
+function CreditCard({ cardInfo }) {
+  let {name, expireDate, creditCardNumber, bankName} = cardInfo
 
-// If you want your app to work offline and load faster, you can change
-// unregister() to register() below. Note this comes with some pitfalls.
-// Learn more about service workers: https://bit.ly/CRA-PWA
-serviceWorker.unregister();
+  return(
+    <div className='credit-card'>
+      <div className='cardInfo'>
+        <div className='name'>{name}</div>
+        <div className='expire-date'>{expireDate}</div>
+        <div className='cc-number'>{creditCardNumber}</div>
+        <div className='bankName'>{bankName}</div>
+      </div>
+    </div>
+  )
+} 
+
+CreditCard.propTypes = {
+  cardInfo: PropTypes.shape({
+    name: PropTypes.string.isRequired,
+    expireDate: PropTypes.string.isRequired,
+    creditCardNumber: PropTypes.number.isRequired,
+    bankName: PropTypes.string.isRequired
+  }).isRequired
+}
+
+var testCardInfo = {
+  name: 'CARDHOLDER NAME',
+  expireDate: '08/19',
+  creditCardNumber: 123456789000,
+  bankName: 'Ally Bank'
+}
+
+ReactDOM.render(<CreditCard cardInfo={testCardInfo} />, 
+  document.getElementById('root')
+);
+
