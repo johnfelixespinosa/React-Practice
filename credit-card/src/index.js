@@ -1,40 +1,39 @@
 import React from 'react';
-import ReactDOM from 'react-dom';
 import PropTypes from 'prop-types';
+import ReactDOM from 'react-dom';
 import './index.css';
 
-function CreditCard({ cardInfo }) {
-  let {name, expireDate, creditCardNumber, bankName} = cardInfo
-
+function CreditCard({ card }) {
+  var {name, cardNumber, expirationDate, bankName} = card;
   return(
-    <div className='credit-card'>
-      <div className='cardInfo'>
-        <div className='name'>{name}</div>
-        <div className='expire-date'>{expireDate}</div>
-        <div className='cc-number'>{creditCardNumber}</div>
-        <div className='bankName'>{bankName}</div>
+    <div className="credit-card">
+      <div className="bank-name">{bankName}</div>
+      <div className="card-number">{cardNumber}</div>
+      <div className="first-four-digits">{cardNumber.substring(0, 4)}</div>
+      <div className="expiration">
+        <span className="valid-thru">Valid Thru</span> {expirationDate}
       </div>
+      <div className="name">{name}</div>
     </div>
-  )
-} 
-
+  );
+}
 CreditCard.propTypes = {
-  cardInfo: PropTypes.shape({
-    name: PropTypes.string.isRequired,
-    expireDate: PropTypes.string.isRequired,
-    creditCardNumber: PropTypes.number.isRequired,
-    bankName: PropTypes.string.isRequired
+  card: PropTypes.shape({
+    bankName: PropTypes.string.isRequired,
+    cardNumber: PropTypes.string.isRequired,
+    expirationDate: PropTypes.string.isRequired,
+    name: PropTypes.string.isRequired
   }).isRequired
-}
+};
 
-var testCardInfo = {
-  name: 'CARDHOLDER NAME',
-  expireDate: '08/19',
-  creditCardNumber: 123456789000,
-  bankName: 'Ally Bank'
-}
+var cardInfo =  {
+  bankName: "Big Bank, Inc.",
+  cardNumber: "1234 5678 8765 4321",
+  expirationDate: "8/19",
+  name: "Cardholder Name"
+};
 
-ReactDOM.render(<CreditCard cardInfo={testCardInfo} />, 
+ReactDOM.render(
+  <CreditCard card={cardInfo}/>,
   document.getElementById('root')
 );
-
