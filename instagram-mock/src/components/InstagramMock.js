@@ -51,11 +51,11 @@ function InstagramMock({ postInfo }) {
   );
 }
 InstagramMock.propTypes = {
-          postInfo: PropTypes.shape({
-          username: PropTypes.string.isRequired,
-        image: PropTypes.string.isRequired
-      }).isRequired
-    };
-    
+  postInfo: PropTypes.shape({
+    username: PropTypes.string.isRequired,
+    image: PropTypes.string.isRequired
+  }).isRequired
+};
+
 export default InstagramMock
     
