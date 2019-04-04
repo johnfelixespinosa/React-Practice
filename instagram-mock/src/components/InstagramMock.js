@@ -13,8 +13,8 @@ function InstagramMock({ postInfo }) {
     likes,
     heart,
     username2,
-    comment,
-    atUser } = postInfo;
+    comment
+  } = postInfo;
 
   return (
     <div className="column w-col w-col-7 w-col-small-small-stack w-col-stack">
