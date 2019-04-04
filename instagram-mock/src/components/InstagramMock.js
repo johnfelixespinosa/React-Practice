@@ -19,9 +19,9 @@ function InstagramMock({ postInfo }) {
   return (
     <div className="column w-col w-col-7 w-col-small-small-stack w-col-stack">
       <div className="preview-container">
-        <div className="post-container">
-          <div className="post-top w-clearfix">
-            <div className="post-user-icon">
+        <div className="poster-container">
+          <div className="poster-top w-clearfix">
+            <div className="poster-user-icon">
               <img src={userIconImage} width="40" className="image-2" id="profile-pic" />
               <p className="blue instagram-poster-top" id="username">{username}</p>
             </div>
@@ -41,7 +41,7 @@ function InstagramMock({ postInfo }) {
             <div className="poster-text" id="poster-text-caption">
               <p className="instagram-text">
                 <span className="username">{username2}</span>
-                  {comment}<span class="at-username">{atUser}</span>
+                  {comment}
                 </p>
             </div>
           </div>
@@ -57,5 +57,5 @@ InstagramMock.propTypes = {
       }).isRequired
     };
     
-    export default InstagramMock
+export default InstagramMock
     
