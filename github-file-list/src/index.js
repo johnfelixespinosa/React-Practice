@@ -1,100 +1,101 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import PropTypes from 'prop-types';
-import Time from './time';
-import './index.css';
 
-const FileList = ({ files }) => (
-  <table className="file-list">
-    <tbody>
-      {files.map(file =>
-        <FileListItem key={file.id} file={file} />
-      )}
-    </tbody>
-  </table>
-);
-FileList.propTypes = {
-  files: PropTypes.array
-};
+class ErrorCatcher extends React.Component {
+  state = { error: null }
+  componentDidCatch(error, info) {
+    console.log('[componentDidCatch]', error); this.setState({ error: info.componentStack });
+  }
+  render() {
+    if (this.state.error) {
+      return (<div>
+        An error occurred: {this.state.error} </div>
+      )
+    }
+    return this.props.children;
+  }
+}
 
-const FileListItem = ({ file }) => (
-  <tr className="file-list-item">
-    <td><FileIcon file={file} /></td>
-    <td><FileName file={file} /></td>
-    <td><CommitMessage commit={file.latestCommit} /></td>
-    <td><Time time={file.updated_at} /></td>
-  </tr>
-);
-FileListItem.propTypes = {
-file: PropTypes.object.isRequired };
-
-const CommitMessage = ({ commit }) => (
-  <span className="commit-message">
-    {commit.message}
-  </span>
-);
-CommitMessage.propTypes = {
-  commit: PropTypes.object.isRequired
-};
-
-function FileIcon({ file }) {
-  let icon = 'fa-file-text-o';
-  if (file.type === 'folder') {
-    icon = 'fa-folder';
+class LifecycleDemo extends React.Component { // Initialize state first
+  // (happens before constructor)
+  state = { counter: 0 };
+  // The first method called after initializing state
+  constructor(props) {
+    super(props);
+    console.log('[constructor]');
+    console.log(' State already set:', this.state);
+  }
+  // Called after initial render is done
+  componentDidMount() {
+    console.log('[componentDidMount]', 'Mounted.');
+  }
+  // ** Don't forget to make this `static`! **
+  // Called before initial render, and any time new props // are received.
+  static getDerivedStateFromProps(nextProps, prevState) {
+    console.log('[getDerivedStateFromProps]'); 
+    console.log(' Next props:', nextProps); 
+    console.log(' Prev state:', prevState); 
+    return null;
+  }
+  // Called before each render. Return false to prevent rendering.
+  shouldComponentUpdate(nextProps, nextState) {
+    console.log('[shouldComponentUpdate]', 'Deciding to update'); 
+    return true;
+  }
+  // Called after render() but before updating the DOM
+  // A good time to make calculations based on old DOM nodes.
+  // The value returned here is passed into componentDidUpdate
+  getSnapshotBeforeUpdate(nextProps, nextState) {
+    console.log('[getSnapshotBeforeUpdate]', 'About to update...'); 
+    return `Time is ${Date.now()}`;
   }
 
-  return (
-    <span className="file-icon">
-      <i className={`fa ${icon}`} />
-    </span>
-  );
+  componentDidUpdate(prevProps, prevState, snapshot) {
+    console.log('[componentDidUpdate]', 'Updated.');
+    console.log('  snapshot:', snapshot);
+  }
+
+  componentWillUnmount() {
+    console.log('[componentWillUnmount]', 'Goodbye cruel world.');
+  }
+
+  handleClick = () => {
+    this.setState({
+      counter: this.state.counter + 1
+    });
+  };
+
+  causeErrorNextRender = () => {
+    // Set a flag to cause an error on the next render
+    // This will cause componentDidCatch to run in the parent 
+    this.setState({
+    causeError: true
+  });
 }
-FileIcon.propTypes = {
-  file: PropTypes.object.isRequired
-};
 
-function FileName({ file }) {
-  return (
-    <React.Fragment>
-      <FileIcon file={file} />
-      <span className="file-name">{file.name}</span>
-    </React.Fragment>
-  );
+render() {
+  console.log('[render]'); 
+  if (this.state.causeError) {
+    throw new Error('oh no!!');
+  }
+
+    return (
+      <div>
+        <span>Counter: {this.state.counter}</span>
+        <button onClick={this.handleClick}>
+          Click to increment
+        </button>
+        <button onClick={this.causeErrorNextRender}>
+          Throw an error
+        </button>
+      </div>
+    );
+  }
 }
-FileName.propTypes = {
-  file: PropTypes.object.isRequired
-};
 
-const testFiles = [
-  {
-    id: 1,
-    name: 'src',
-    type: 'folder',
-    updated_at: "2016-07-11 21:24:00",
-    latestCommit: {
-      message: 'Initial commit'
-    }
-  },
-  {
-    id: 2,
-    name: 'tests',
-    type: 'folder',
-    updated_at: "2016-07-11 21:24:00",
-    latestCommit: {
-      message: 'Initial commit'
-    }
-  },
-  {
-    id: 3,
-    name: 'README',
-    type: 'file',
-    updated_at: "2016-07-18 21:24:00",
-    latestCommit: {
-      message: 'Added a readme'
-    }
-  },
-];
-
-ReactDOM.render(<FileList files={testFiles} />, document.querySelector('#root'));
-
-export { FileList, testFiles }; 
+ReactDOM.render(
+  <ErrorCatcher>
+    <LifecycleDemo />
+  </ErrorCatcher>,
+  document.querySelector('#root')
+);
