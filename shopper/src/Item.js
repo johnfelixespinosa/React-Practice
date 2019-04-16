@@ -23,7 +23,6 @@ const Item = ({ item, children }) => (
 );
 Item.propTypes = {
   item: PropTypes.object.isRequired,
-  onAddToCart: PropTypes.func.isRequired,
   children: PropTypes.node
 };
 
