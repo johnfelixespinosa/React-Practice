@@ -7,10 +7,6 @@ export default class Feed extends Component {
   };
 
   componentDidMount() {
-    // To use static data, uncomment this line:
-    // this.processPosts(reactjsPosts.data.children);
-
-    // To fetch live data from Reddit, use this block of code:
     fetch('http://www.reddit.com/r/reactjs.json')
       .then(res => res.json())
       .then(json => this.processFeeds(json.data.children))
@@ -18,7 +14,6 @@ export default class Feed extends Component {
   }
 
   processFeeds = (feeds) => {
-    // Make the data nicer to work with
     let feedsHash = feeds.reduce((hash, link) => {
       hash[link.data.id] = link.data;
       return hash;
