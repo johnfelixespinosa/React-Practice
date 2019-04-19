@@ -1,0 +1,6 @@
+Activity.create(title: "Learn how to french braid hair", activity_type: "education", participants: 3, price: 5)
+Activity.create(title: "Hold a yard sale", activity_type: "social", participants: 1 , price: 0)
+Activity.create(title: "Volunteer at a local animal shelter", activity_type: "charity", participants: 1 , price: 0)
+Activity.create(title: "Goto the gym", activity_type:"recreational", participants: 1, price: 2)
+Activity.create(title: "Learn how to play a new sport", activity_type: "recreactional", participants: 1, price: 2)
+Activity.create(title: "Listen to your favorite album", activity_type: "music", participants: 1, price: 1)

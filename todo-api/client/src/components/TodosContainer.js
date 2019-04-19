@@ -92,7 +92,7 @@ class TodosContainer extends Component {
                   <span className="deleteTaskBtn"
                     onClick={(e) => this.deleteTodo(todo.id)}>
                     x
-</span>
+                  </span>
                 </li>
               )
             })}
