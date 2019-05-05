@@ -3,7 +3,7 @@ import './App.css';
 import Image from './Component/Image';
 import { createStore } from 'redux';
 import { Provider } from 'react-redux';
-import manageImages from './Reducers/manageImages';
+import manageImages from './reducers/manageImages';
 
 class App extends Component {
   render() {
@@ -14,8 +14,6 @@ class App extends Component {
     );
   }
 }
-
-
 
 const store = createStore(manageImages);
 
