@@ -1,6 +1,4 @@
 import React, { Component } from 'react';
-// import CommentList from './CommentList';
-// import CommentForm from './CommentForm';
 
 class CommentBox extends Component {
   constructor(props) {
